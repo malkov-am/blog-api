@@ -1,0 +1,15 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Logs
+*.log
+
+# Dependency directory
+/node_modules
+
+# Optional REPL history
+.DS_Store
+.idea
+.vscode
+
+# Environment variables
+.env
