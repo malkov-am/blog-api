@@ -3,10 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const { errors } = require('celebrate');
-// const { errorHandler } = require('./middlewares/errorHandler');
+const { errors } = require("celebrate");
+const { errorHandler } = require("./middlewares/errorHandler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-// const routes = require('./routes/index');
+const routes = require("./routes/index");
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -20,19 +20,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Логгер запросов
-// app.use(requestLogger);
+app.use(requestLogger);
 
 // Роуты
-// app.use('/', routes);
+app.use("/", routes);
 
 // Логгер ошибок
 app.use(errorLogger);
 
 // Обработчик ошибок celebrate
-// app.use(errors());
+app.use(errors());
 
 // Централизованный обработчик ошибок
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // Запуск сервера
 app.listen(PORT);
