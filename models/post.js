@@ -9,7 +9,6 @@ const postSchema = new mongoose.Schema(
     },
     attachment: {
       type: String,
-      required: [true, 'Не передано поле "attachment".'],
       validate: {
         validator(link) {
           return validator.isURL(link);
