@@ -60,16 +60,20 @@ function createUser(req, res, next) {
       }
       return bcrypt
         .hash(password, 10)
-        .then((hash) => User.create({
-          email,
-          password: hash,
-          name,
-        }))
-        .then((newUser) => res.status(CREATED_CODE).send({
-          _id: newUser._id,
-          email,
-          name,
-        }));
+        .then((hash) =>
+          User.create({
+            email,
+            password: hash,
+            name,
+          }),
+        )
+        .then((newUser) =>
+          res.status(CREATED_CODE).send({
+            _id: newUser._id,
+            email,
+            name,
+          }),
+        );
     })
     .catch((err) => {
       if (err.code === 11000) {

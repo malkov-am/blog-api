@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const postSchema = new mongoose.Schema(
   {
@@ -19,10 +19,10 @@ const postSchema = new mongoose.Schema(
     owner: {
       type: mongoose.Types.ObjectId,
       required: [true, 'Не передано поле "Автор".'],
-      ref: "user",
+      ref: 'user',
     },
   },
-  { versionKey: false }
+  { versionKey: false },
 );
 
-module.exports = mongoose.model("post", postSchema);
+module.exports = mongoose.model('post', postSchema);

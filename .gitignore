@@ -13,3 +13,7 @@
 
 # Environment variables
 .env
+
+# Firebase
+.firebaserc
+firebase.json
