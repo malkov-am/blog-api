@@ -15,10 +15,11 @@ function getPosts(req, res, next) {
 
 // Создаёт пост
 function createPost(req, res, next) {
-  const { content, attachment } = req.body;
+  const { content, filename, filelink } = req.body;
   Post.create({
     content,
-    attachment,
+    filename,
+    filelink,
     owner: req.user,
   })
     .then((post) => {
@@ -38,7 +39,7 @@ function createPost(req, res, next) {
 
 // Редактирует пост
 function updatePost(req, res, next) {
-  const { content, attachment } = req.body;
+  const { content, filename, filelink } = req.body;
   Post.findById(req.params.postId)
     .orFail(new NotFoundError({ message: 'Пост с указанным _id не найден.' }))
     .then((post) => {
@@ -47,7 +48,7 @@ function updatePost(req, res, next) {
       }
       return Post.findByIdAndUpdate(
         req.params.postId,
-        { content, attachment },
+        { content, filename, filelink },
         { new: true, runValidators: true },
       )
         .then((updatedPost) => {

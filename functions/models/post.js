@@ -7,7 +7,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Не передано поле "content".'],
     },
-    attachment: {
+    filename: {
+      type: String,
+    },
+    filelink: {
       type: String,
       validate: {
         validator(link) {
