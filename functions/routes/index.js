@@ -26,7 +26,7 @@ router.get('/posts', getPosts);
 
 // Защищенные маршруты
 router.use(auth);
-router.get('/me', getUserInfo);
+router.get('/users/me', getUserInfo);
 router.post('/posts', validatePost, createPost);
 router.patch('/posts/:postId', validatePost, updatePost);
 router.delete('/posts/:postId', validateDeletePost, deletePost);

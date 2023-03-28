@@ -7,9 +7,8 @@ const Post = require('../models/post');
 // Возвращает все посты
 function getPosts(req, res, next) {
   Post.find()
-    .then((posts) => {
-      res.send(posts);
-    })
+    .populate('owner')
+    .then((populatedPosts) => res.send(populatedPosts))
     .catch(next);
 }
 
