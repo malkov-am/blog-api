@@ -22,7 +22,7 @@ function createPost(req, res, next) {
     owner: req.user,
   })
     .then((post) => {
-      res.send(post);
+      post.populate('owner').then((populatedPost) => res.send(populatedPost));
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -50,6 +50,7 @@ function updatePost(req, res, next) {
         { content, filename, filelink },
         { new: true, runValidators: true },
       )
+        .populate('owner')
         .then((updatedPost) => {
           res.send(updatedPost);
         })
