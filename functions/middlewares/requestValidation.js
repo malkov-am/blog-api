@@ -54,8 +54,11 @@ const validatePost = celebrate({
     content: Joi.string().required().messages({
       'any.required': 'Не передано поле "content".',
     }),
-    attachment: Joi.string().uri().messages({
-      'any.required': 'Не передано поле "attachment".',
+    filename: Joi.string().messages({
+      'any.required': 'Не передано поле "filename".',
+    }),
+    filelink: Joi.string().uri().messages({
+      'any.required': 'Не передано поле "filelink".',
     }),
   }),
 });
