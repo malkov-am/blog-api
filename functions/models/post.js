@@ -19,6 +19,10 @@ const postSchema = new mongoose.Schema(
         message: ({ value }) => `${value} некорректный URL вложения.`,
       },
     },
+    pubdate: {
+      type: Date,
+      default: Date,
+    },
     owner: {
       type: mongoose.Types.ObjectId,
       required: [true, 'Не передано поле "Автор".'],

@@ -6,7 +6,17 @@ const Post = require('../models/post');
 
 // Возвращает все посты
 function getPosts(req, res, next) {
-  Post.find()
+  const currentDate = new Date();
+  Post.find({ pubdate: { $lte: currentDate } })
+    .populate('owner')
+    .then((populatedPosts) => res.send(populatedPosts))
+    .catch(next);
+}
+
+// Возвращает посты с отложенной датой публикации
+function getDeferredPosts(req, res, next) {
+  const currentDate = new Date();
+  Post.find({ owner: req.user._id, pubdate: { $gt: currentDate } })
     .populate('owner')
     .then((populatedPosts) => res.send(populatedPosts))
     .catch(next);
@@ -14,11 +24,12 @@ function getPosts(req, res, next) {
 
 // Создаёт пост
 function createPost(req, res, next) {
-  const { content, filename, filelink } = req.body;
+  const { content, filename, filelink, pubdate } = req.body;
   Post.create({
     content,
     filename,
     filelink,
+    pubdate,
     owner: req.user,
   })
     .then((post) => {
@@ -38,7 +49,7 @@ function createPost(req, res, next) {
 
 // Редактирует пост
 function updatePost(req, res, next) {
-  const { content, filename, filelink } = req.body;
+  const { content, filename, filelink, pubdate } = req.body;
   Post.findById(req.params.postId)
     .orFail(new NotFoundError({ message: 'Пост с указанным _id не найден.' }))
     .then((post) => {
@@ -47,7 +58,7 @@ function updatePost(req, res, next) {
       }
       return Post.findByIdAndUpdate(
         req.params.postId,
-        { content, filename, filelink },
+        { content, filename, filelink, pubdate },
         { new: true, runValidators: true },
       )
         .populate('owner')
@@ -101,4 +112,4 @@ function deletePost(req, res, next) {
     });
 }
 
-module.exports = { getPosts, createPost, updatePost, deletePost };
+module.exports = { getPosts, getDeferredPosts, createPost, updatePost, deletePost };

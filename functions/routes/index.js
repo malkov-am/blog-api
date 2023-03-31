@@ -7,7 +7,13 @@ const {
   validateDeletePost,
 } = require('../middlewares/requestValidation');
 const { getUserInfo, createUser, login } = require('../controllers/users');
-const { getPosts, createPost, deletePost, updatePost } = require('../controllers/posts');
+const {
+  getPosts,
+  createPost,
+  deletePost,
+  updatePost,
+  getDeferredPosts,
+} = require('../controllers/posts');
 const NotFoundError = require('../errors/NotFoundError');
 
 // Обработчик несуществующего маршрута
@@ -27,6 +33,7 @@ router.get('/posts', getPosts);
 // Защищенные маршруты
 router.use(auth);
 router.get('/users/me', getUserInfo);
+router.get('/posts/deferred', getDeferredPosts);
 router.post('/posts', validatePost, createPost);
 router.patch('/posts/:postId', validatePost, updatePost);
 router.delete('/posts/:postId', validateDeletePost, deletePost);
